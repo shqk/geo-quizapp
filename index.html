@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Geo Quiz App</title>
-    <link rel="stylesheet" href="/assets/style.css" />
+    <link rel="stylesheet" href="/assets/style/style.css" />
+    <script src="/app.js" defer></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
@@ -11,6 +12,66 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body></body>
+  <body>
+    <div class="menu">
+      <div class="menu-title">
+        <h2>Choisissez un <span>quiz</span></h2>
+      </div>
+      <div class="menu-options">
+        <div class="flags-option">
+          <h1>Drapeaux</h1>
+          <div class="flags-list">
+            <img
+              src="/assets/img/canada.svg"
+              alt="drapeau canada"
+              class="flag"
+            />
+            <img
+              src="/assets/img/france.svg"
+              alt="drapeau france"
+              class="flag"
+            />
+            <img
+              src="/assets/img/portugal.svg"
+              alt="drapeau portugal"
+              class="flag"
+            />
+          </div>
+          <div class="best-score">
+            <h2>Meilleur score : <span>0%</span></h2>
+          </div>
+        </div>
+        <div class="capitals-option">
+          <h1>Capitales</h1>
+          <div class="monument-list">
+            <img
+              src="/assets/img/statue-of-liberty.svg"
+              alt="drapeau canada"
+              class="monument"
+            />
+            <img
+              src="/assets/img/eiffel-tower-paris.svg"
+              alt="drapeau france"
+              class="monument"
+            />
+            <img
+              src="/assets/img/torii-gate.svg"
+              alt="drapeau portugal"
+              class="monument"
+            />
+          </div>
+          <div class="best-score">
+            <h2>Meilleur score : <span>0%</span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
