@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <title>Geo Quiz App</title>
@@ -20,57 +20,93 @@
     />
   </head>
   <body>
-    <div class="menu">
-      <div class="menu-title">
-        <h2>Choisissez un <span>quiz</span></h2>
+    <div class="app-container">
+      <div class="menu">
+        <div class="menu-title">
+          <h2>Choisissez un <span>quiz</span></h2>
+        </div>
+        <div class="menu-options">
+          <div class="flags-option">
+            <h1>Drapeaux</h1>
+            <div class="flags-list">
+              <img
+                src="/assets/img/canada.svg"
+                alt="drapeau canada"
+                class="flag"
+              />
+              <img
+                src="/assets/img/france.svg"
+                alt="drapeau france"
+                class="flag"
+              />
+              <img
+                src="/assets/img/portugal.svg"
+                alt="drapeau portugal"
+                class="flag"
+              />
+            </div>
+            <div class="best-score">
+              <h2>Meilleur score : <span>0%</span></h2>
+            </div>
+          </div>
+          <div class="capitals-option">
+            <h1>Capitales</h1>
+            <div class="monument-list">
+              <img
+                src="/assets/img/statue-of-liberty.svg"
+                alt="drapeau canada"
+                class="monument"
+              />
+              <img
+                src="/assets/img/eiffel-tower-paris.svg"
+                alt="drapeau france"
+                class="monument"
+              />
+              <img
+                src="/assets/img/torii-gate.svg"
+                alt="drapeau portugal"
+                class="monument"
+              />
+            </div>
+            <div class="best-score">
+              <h2>Meilleur score : <span>0%</span></h2>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="menu-options">
-        <div class="flags-option">
-          <h1>Drapeaux</h1>
-          <div class="flags-list">
-            <img
-              src="/assets/img/canada.svg"
-              alt="drapeau canada"
-              class="flag"
-            />
-            <img
-              src="/assets/img/france.svg"
-              alt="drapeau france"
-              class="flag"
-            />
-            <img
-              src="/assets/img/portugal.svg"
-              alt="drapeau portugal"
-              class="flag"
-            />
+      <div class="quiz-section">
+        <div class="quiz-progression">
+          <div class="quit">
+            <div class="quit-cross"></div>
           </div>
-          <div class="best-score">
-            <h2>Meilleur score : <span>0%</span></h2>
-          </div>
+          <div class="progress-bar"></div>
+          <div class="progress-number">0/20</div>
         </div>
-        <div class="capitals-option">
-          <h1>Capitales</h1>
-          <div class="monument-list">
-            <img
-              src="/assets/img/statue-of-liberty.svg"
-              alt="drapeau canada"
-              class="monument"
-            />
-            <img
-              src="/assets/img/eiffel-tower-paris.svg"
-              alt="drapeau france"
-              class="monument"
-            />
-            <img
-              src="/assets/img/torii-gate.svg"
-              alt="drapeau portugal"
-              class="monument"
-            />
-          </div>
-          <div class="best-score">
-            <h2>Meilleur score : <span>0%</span></h2>
-          </div>
+        <div class="question">
+          <p class="question-text">Quelle est la capitale de ce pays ?</p>
+          <span class="country-name">France</span>
+          <img src="" alt="" class="inactive" />
         </div>
+        <ul class="answer">
+          <li>
+            <span>A</span>
+            <span class="option">Paname</span>
+          </li>
+          <li>
+            <span>B</span>
+            <span class="option">C'est la</span>
+          </li>          
+          <li>
+            <span>C</span>
+            <span class="option">Champions</span>
+          </li>          
+          <li>
+            <span>D</span>
+            <span class="option">League</span>
+          </li>
+        </ul>
+        </div>
+        <div class="quiz-footer"></div>
       </div>
     </div>
   </body>
