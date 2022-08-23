@@ -4,7 +4,7 @@
     opacity: 1;
   }
   to {
-    transform: scale(0);
+    transform: scale(0.5);
     opacity: 0;
   }
 }
@@ -14,14 +14,14 @@
     opacity: 1;
   }
   to {
-    transform: scale(0);
+    transform: scale(0.5);
     opacity: 0;
   }
 }
 @-webkit-keyframes section-appear {
   from {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.5);
   }
   to {
     transform: scale(1);
@@ -31,11 +31,33 @@
 @keyframes section-appear {
   from {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.5);
   }
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+@-webkit-keyframes correct-answer {
+  50% {
+    color: white;
+    background: #21b844;
+    transform: scale(1.2);
+  }
+  100% {
+    background: #21b844;
+    transform: scale(1);
+  }
+}
+@keyframes correct-answer {
+  50% {
+    color: white;
+    background: #21b844;
+    transform: scale(1.2);
+  }
+  100% {
+    background: #21b844;
+    transform: scale(1);
   }
 }
 * {
@@ -191,7 +213,6 @@ body .app-container .quiz-section {
   border-radius: 15px;
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.103);
   transition: all 0.3s ease;
-  opacity: 0;
 }
 body .app-container .quiz-section .quiz-progression {
   display: flex;
@@ -302,13 +323,24 @@ body .app-container .quiz-section ul li span:first-of-type {
   color: rgb(189, 189, 189);
   margin-right: 20px;
 }
+body .app-container .quiz-section ul .correct-answer {
+  -webkit-animation: correct-answer 0.4s forwards;
+          animation: correct-answer 0.4s forwards;
+  border: 2px solid #21b844;
+}
+body .app-container .quiz-section ul .correct-answer > span {
+  color: white;
+}
+body .app-container .quiz-section ul .correct-answer span:first-of-type {
+  color: white;
+}
 body .app-container .section-disappear {
-  -webkit-animation: section-disappear 0.5s forwards;
-          animation: section-disappear 0.5s forwards;
+  -webkit-animation: section-disappear 0.4s forwards;
+          animation: section-disappear 0.4s forwards;
 }
 body .app-container .section-appear {
-  -webkit-animation: section-appear 0.5s forwards;
-          animation: section-appear 0.5s forwards;
+  -webkit-animation: section-appear 0.4s forwards;
+          animation: section-appear 0.4s forwards;
 }
 body .app-container .inactive {
   display: none;
