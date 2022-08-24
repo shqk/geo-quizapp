@@ -7,14 +7,25 @@ const quizBox = document.querySelector('.quiz-section');
 const exitBtn = document.querySelector('.quit-cross');
 const choiceButton = document.querySelectorAll('.answer li');
 
+async function fetchCountries() {
+  await fetch('https://restcountries.com/v3.1/all')
+    .then((res) => res.json())
+    .then((data) => {
+      countriesData = data;
+    });
+  console.log(countriesData);
+}
+
+fetchCountries();
+
 flagBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
 });
 
 exitBtn.addEventListener('click', () => {
-  console.log('lol');
   disappear(quizBox);
+  appear(mainMenu);
 });
 
 function disappear(disappearringElement) {
@@ -36,12 +47,6 @@ function appear(appearElement) {
   }, 300);
 }
 
-// for (let i = 0; i < choiceButton.length; i++) {
-//   choiceButton[i].addEventListener('click', () => {
-//     choiceButton[i].classList.add('correct-answer');
-//   });
-// }
-
 for (let i = 0; i < choiceButton.length; i++) {
   choiceButton[i].addEventListener('click', () => {
     if (i % 2 == 0) {
@@ -51,14 +56,3 @@ for (let i = 0; i < choiceButton.length; i++) {
     }
   });
 }
-
-// async function fetchCountries() {
-//   await fetch('https://restcountries.com/v3.1/all')
-//     .then((res) => res.json())
-//     .then((data) => {
-//       countriesData = data;
-//     });
-//   console.log(countriesData);
-// }
-
-// fetchCountries();

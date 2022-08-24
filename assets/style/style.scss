@@ -91,6 +91,7 @@ body {
       justify-content: space-around;
       box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.103);
       transform-origin: center;
+      opacity: 0;
 
       .menu-title {
         font-weight: 500;
@@ -192,7 +193,7 @@ body {
       border-radius: 15px;
       box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.103);
       transition: all 0.3s ease;
-      // opacity: 0;
+      opacity: 0;
 
       .quiz-progression {
         display: flex;
