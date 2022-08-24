@@ -1,4 +1,5 @@
 $green-color: #21b844;
+$red-color: #da0000;
 $background-color: #ececec;
 $box-color: #fff;
 $title-color: #363636;
@@ -29,12 +30,29 @@ $subtitle-color: #616161;
 @keyframes correct-answer {
   50% {
     color: white;
-    background: $green-color;
     transform: scale(1.2);
   }
   100% {
     background: $green-color;
     transform: scale(1);
+  }
+}
+
+@keyframes incorrect-answer {
+  20% {
+    transform: translateX(10px);
+  }
+  40% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(10px);
+  }
+  80% {
+    transform: translateX(-10px);
+  }
+  100% {
+    background: $red-color;
   }
 }
 
@@ -293,8 +311,17 @@ body {
           border: 2px solid $green-color;
 
           > span {
-            // font-weight: 500;
-            // font-size: 1.6rem;
+            color: white;
+          }
+          span:first-of-type {
+            color: white;
+          }
+        }
+        .incorrect-answer {
+          animation: incorrect-answer 0.4s forwards;
+          border: 2px solid $red-color;
+
+          > span {
             color: white;
           }
           span:first-of-type {

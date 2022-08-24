@@ -36,9 +36,19 @@ function appear(appearElement) {
   }, 300);
 }
 
+// for (let i = 0; i < choiceButton.length; i++) {
+//   choiceButton[i].addEventListener('click', () => {
+//     choiceButton[i].classList.add('correct-answer');
+//   });
+// }
+
 for (let i = 0; i < choiceButton.length; i++) {
   choiceButton[i].addEventListener('click', () => {
-    choiceButton[i].classList.add('correct-answer');
+    if (i % 2 == 0) {
+      choiceButton[i].classList.add('incorrect-answer');
+    } else {
+      choiceButton[i].classList.add('correct-answer');
+    }
   });
 }
 

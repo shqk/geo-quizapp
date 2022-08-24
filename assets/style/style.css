@@ -41,7 +41,6 @@
 @-webkit-keyframes correct-answer {
   50% {
     color: white;
-    background: #21b844;
     transform: scale(1.2);
   }
   100% {
@@ -52,12 +51,45 @@
 @keyframes correct-answer {
   50% {
     color: white;
-    background: #21b844;
     transform: scale(1.2);
   }
   100% {
     background: #21b844;
     transform: scale(1);
+  }
+}
+@-webkit-keyframes incorrect-answer {
+  20% {
+    transform: translateX(10px);
+  }
+  40% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(10px);
+  }
+  80% {
+    transform: translateX(-10px);
+  }
+  100% {
+    background: #da0000;
+  }
+}
+@keyframes incorrect-answer {
+  20% {
+    transform: translateX(10px);
+  }
+  40% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(10px);
+  }
+  80% {
+    transform: translateX(-10px);
+  }
+  100% {
+    background: #da0000;
   }
 }
 * {
@@ -332,6 +364,17 @@ body .app-container .quiz-section ul .correct-answer > span {
   color: white;
 }
 body .app-container .quiz-section ul .correct-answer span:first-of-type {
+  color: white;
+}
+body .app-container .quiz-section ul .incorrect-answer {
+  -webkit-animation: incorrect-answer 0.4s forwards;
+          animation: incorrect-answer 0.4s forwards;
+  border: 2px solid #da0000;
+}
+body .app-container .quiz-section ul .incorrect-answer > span {
+  color: white;
+}
+body .app-container .quiz-section ul .incorrect-answer span:first-of-type {
   color: white;
 }
 body .app-container .section-disappear {
