@@ -1,7 +1,10 @@
 // api : https://restcountries.com/v3.1/all
 
 let countriesData = [];
+let selectedCountries = [];
+let quizType;
 const flagBtn = document.querySelector('.flags-option');
+const capBtn = document.querySelector('.capitals-option');
 const mainMenu = document.querySelector('.menu');
 const quizBox = document.querySelector('.quiz-section');
 const exitBtn = document.querySelector('.quit-cross');
@@ -14,6 +17,10 @@ async function fetchCountries() {
       countriesData = data;
     });
   console.log(countriesData);
+  tenCountries();
+  console.log(selectedCountries);
+  // let image = document.querySelector('.question > img');
+  // image.src = selectedCountries[0].flags.png;
 }
 
 fetchCountries();
@@ -21,6 +28,13 @@ fetchCountries();
 flagBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
+  quizType = 'flag';
+});
+
+capBtn.addEventListener('click', () => {
+  disappear(mainMenu);
+  appear(quizBox);
+  quizType = 'capital';
 });
 
 exitBtn.addEventListener('click', () => {
@@ -47,12 +61,30 @@ function appear(appearElement) {
   }, 300);
 }
 
-for (let i = 0; i < choiceButton.length; i++) {
-  choiceButton[i].addEventListener('click', () => {
-    if (i % 2 == 0) {
-      choiceButton[i].classList.add('incorrect-answer');
+// Choisi aléatoirement 10 pays
+
+function tenCountries() {
+  while (selectedCountries.length < 10) {
+    let randomIndex = Math.floor(Math.random() * countriesData.length);
+    if (
+      countriesData[randomIndex].independent &&
+      !selectedCountries.includes(countriesData[randomIndex])
+    ) {
+      selectedCountries.push(countriesData[randomIndex]);
     } else {
-      choiceButton[i].classList.add('correct-answer');
+      tenCountries(countriesData);
     }
-  });
+  }
+}
+
+function quiz(userChoice) {
+  let index = 0;
+  if (userChoice === 'flag') {
+    let questionText = document.querySelector('.question-text');
+    let image = document.querySelector('.question > img');
+    questionText.textContent = 'À quel pays appartient ce drapeau ?';
+    image.src = selectedCountries[0].flags.png;
+    // Choisir des pays aléatoire différents du pays actuel
+  } else {
+  }
 }
