@@ -2,13 +2,13 @@
 
 let countriesData = [];
 let selectedCountries = [];
+let index = 0;
 let quizType;
 const flagBtn = document.querySelector('.flags-option');
 const capBtn = document.querySelector('.capitals-option');
 const mainMenu = document.querySelector('.menu');
 const quizBox = document.querySelector('.quiz-section');
 const exitBtn = document.querySelector('.quit-cross');
-const choiceButton = document.querySelectorAll('.answer li');
 
 async function fetchCountries() {
   await fetch('https://restcountries.com/v3.1/all')
@@ -19,8 +19,6 @@ async function fetchCountries() {
   console.log(countriesData);
   tenCountries();
   console.log(selectedCountries);
-  // let image = document.querySelector('.question > img');
-  // image.src = selectedCountries[0].flags.png;
 }
 
 fetchCountries();
@@ -29,12 +27,18 @@ flagBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
   quizType = 'flag';
+  console.log(quizType);
+  showQuestion(quizType, index);
+  showProposition(index);
 });
 
 capBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
   quizType = 'capital';
+  console.log(quizType);
+  showQuestion(quizType, index);
+  showProposition(index);
 });
 
 exitBtn.addEventListener('click', () => {
@@ -49,6 +53,7 @@ function disappear(disappearringElement) {
     disappearringElement.classList.remove('section-disappear');
     disappearringElement.classList.add('inactive');
   }, 300);
+  quizType = null;
 }
 
 function appear(appearElement) {
@@ -77,14 +82,28 @@ function tenCountries() {
   }
 }
 
-function quiz(userChoice) {
-  let index = 0;
+function showQuestion(userChoice, index) {
+  let questionText = document.querySelector('.question-text');
+  let image = document.querySelector('.question img');
+  let countryName = document.querySelector('.country-name');
   if (userChoice === 'flag') {
-    let questionText = document.querySelector('.question-text');
-    let image = document.querySelector('.question > img');
+    image.classList = 'flag-picture';
+    countryName.textContent = '';
     questionText.textContent = 'À quel pays appartient ce drapeau ?';
-    image.src = selectedCountries[0].flags.png;
-    // Choisir des pays aléatoire différents du pays actuel
-  } else {
+    image.src = selectedCountries[index].flags.png;
+  } else if (userChoice === 'capital') {
+    image.src = '';
+    image.classList = '';
+    questionText.textContent = 'Quelle est la capitale de ce pays ?';
+    countryName.textContent = selectedCountries[index].translations.fra.common;
+  }
+}
+
+function showProposition(index) {
+  // A remplir avec des pays de la même région
+  let propositionArr = [];
+  let choiceButton = document.querySelectorAll('.answer li .option');
+  for (let i = 0; i < choiceButton.length; i++) {
+    choiceButton[i].textContent = 'lol';
   }
 }

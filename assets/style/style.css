@@ -324,6 +324,11 @@ body .app-container .quiz-section .question span {
 body .app-container .quiz-section .question > span {
   color: #21b844;
 }
+body .app-container .quiz-section .question .flag-picture {
+  width: 180px;
+  border: 3px solid rgb(185, 185, 185);
+  border-radius: 15px;
+}
 body .app-container .quiz-section ul {
   list-style-type: none;
   width: 100%;
