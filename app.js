@@ -17,8 +17,8 @@ async function fetchCountries() {
       countriesData = data;
     });
   console.log(countriesData);
-  tenCountries();
   console.log(selectedCountries);
+  tenCountries();
 }
 
 fetchCountries();
@@ -27,7 +27,6 @@ flagBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
   quizType = 'flag';
-  console.log(quizType);
   showQuestion(quizType, index);
   showProposition(index);
 });
@@ -36,7 +35,6 @@ capBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
   quizType = 'capital';
-  console.log(quizType);
   showQuestion(quizType, index);
   showProposition(index);
 });
@@ -44,6 +42,8 @@ capBtn.addEventListener('click', () => {
 exitBtn.addEventListener('click', () => {
   disappear(quizBox);
   appear(mainMenu);
+  selectedCountries = [];
+  tenCountries();
 });
 
 function disappear(disappearringElement) {
@@ -53,7 +53,6 @@ function disappear(disappearringElement) {
     disappearringElement.classList.remove('section-disappear');
     disappearringElement.classList.add('inactive');
   }, 300);
-  quizType = null;
 }
 
 function appear(appearElement) {
