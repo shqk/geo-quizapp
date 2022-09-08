@@ -18,7 +18,7 @@ async function fetchCountries() {
     });
   console.log(countriesData);
   console.log(selectedCountries);
-  tenCountries();
+  tenCountries(countriesData, selectedCountries);
 }
 
 fetchCountries();
@@ -43,19 +43,19 @@ exitBtn.addEventListener('click', () => {
   disappear(quizBox);
   appear(mainMenu);
   selectedCountries = [];
-  tenCountries();
+  tenCountries(countriesData, selectedCountries);
 });
 
-function disappear(disappearringElement) {
+const disappear = (disappearringElement) => {
   disappearringElement.classList.add('section-disappear');
   disappearringElement.classList.remove('section-appear');
   setTimeout(() => {
     disappearringElement.classList.remove('section-disappear');
     disappearringElement.classList.add('inactive');
   }, 300);
-}
+};
 
-function appear(appearElement) {
+const appear = (appearElement) => {
   setTimeout(() => {
     appearElement.classList.remove('inactive');
     setTimeout(() => {
@@ -63,25 +63,25 @@ function appear(appearElement) {
     }, 300);
     appearElement.classList.remove('section-appear');
   }, 300);
-}
+};
 
 // Choisi aléatoirement 10 pays
 
-function tenCountries() {
-  while (selectedCountries.length < 10) {
-    let randomIndex = Math.floor(Math.random() * countriesData.length);
+const tenCountries = (fromArr, toArr) => {
+  while (toArr.length < 10) {
+    let randomIndex = Math.floor(Math.random() * fromArr.length);
     if (
-      countriesData[randomIndex].independent &&
-      !selectedCountries.includes(countriesData[randomIndex])
+      fromArr[randomIndex].independent &&
+      !toArr.includes(fromArr[randomIndex])
     ) {
-      selectedCountries.push(countriesData[randomIndex]);
+      toArr.push(fromArr[randomIndex]);
     } else {
-      tenCountries(countriesData);
+      tenCountries(fromArr, toArr);
     }
   }
-}
+};
 
-function showQuestion(userChoice, index) {
+const showQuestion = (userChoice, index) => {
   let questionText = document.querySelector('.question-text');
   let image = document.querySelector('.question img');
   let countryName = document.querySelector('.country-name');
@@ -96,13 +96,44 @@ function showQuestion(userChoice, index) {
     questionText.textContent = 'Quelle est la capitale de ce pays ?';
     countryName.textContent = selectedCountries[index].translations.fra.common;
   }
-}
+};
 
-function showProposition(index) {
-  // A remplir avec des pays de la même région
+const showProposition = (index) => {
   let propositionArr = [];
+  // Ajoute le premier pays dans le tableau
+  propositionArr.push(selectedCountries[index]);
   let choiceButton = document.querySelectorAll('.answer li .option');
-  for (let i = 0; i < choiceButton.length; i++) {
-    choiceButton[i].textContent = 'lol';
+  let countriesIndex = 0;
+  // Trouver un moyen aleatoire
+  while (propositionArr.length < choiceButton.length) {
+    if (
+      propositionArr[0].name.common !=
+        countriesData[countriesIndex].name.common &&
+      (propositionArr[0].subregion == countriesData[countriesIndex].subregion ||
+        propositionArr[0].region == countriesData[countriesIndex].region) &&
+      countriesIndex < countriesData.length
+    ) {
+      propositionArr.push(countriesData[countriesIndex]);
+    }
+    countriesIndex++;
   }
-}
+  shuffleArray(propositionArr);
+  for (let i = 0; i < choiceButton.length; i++) {
+    if (quizType == 'flag') {
+      choiceButton[i].textContent = propositionArr[i].translations.fra.common;
+    } else {
+      choiceButton[i].textContent = propositionArr[i].capital[0];
+    }
+  }
+  console.log(propositionArr);
+};
+
+const shuffleArray = (array) => {
+  for (let i = 0; i < array.length; i++) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+};
