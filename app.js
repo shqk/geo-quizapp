@@ -3,12 +3,17 @@
 let countriesData = [];
 let selectedCountries = [];
 let index = 0;
+let indexDisplay = 1;
+const totalQuestions = 10;
 let quizType;
 const flagBtn = document.querySelector('.flags-option');
 const capBtn = document.querySelector('.capitals-option');
 const mainMenu = document.querySelector('.menu');
 const quizBox = document.querySelector('.quiz-section');
 const exitBtn = document.querySelector('.quit-cross');
+const choiceButton = document.querySelectorAll('.answer li');
+const questionContainer = document.querySelector('.question');
+const answerList = document.querySelector('.answer');
 
 async function fetchCountries() {
   await fetch('https://restcountries.com/v3.1/all')
@@ -44,6 +49,17 @@ exitBtn.addEventListener('click', () => {
   appear(mainMenu);
   selectedCountries = [];
   tenCountries(countriesData, selectedCountries);
+});
+
+choiceButton.forEach((choice) => {
+  choice.addEventListener('click', () => {
+    if (index <= 10) {
+      index++;
+      showQuestion(quizType, index);
+      showProposition(index);
+    }
+    // fonction qui affiche la box finale
+  });
 });
 
 const disappear = (disappearringElement) => {
@@ -82,6 +98,7 @@ const tenCountries = (fromArr, toArr) => {
 };
 
 const showQuestion = (userChoice, index) => {
+  questionContainer.classList.remove('fadeout');
   let questionText = document.querySelector('.question-text');
   let image = document.querySelector('.question img');
   let countryName = document.querySelector('.country-name');
@@ -100,12 +117,13 @@ const showQuestion = (userChoice, index) => {
 
 const showProposition = (index) => {
   let propositionArr = [];
+  let choiceContent = document.querySelectorAll('.answer li .option');
+  answerList.classList.remove('fadeout');
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
-  let choiceButton = document.querySelectorAll('.answer li .option');
   let countriesIndex = 0;
   // Trouver un moyen aleatoire
-  while (propositionArr.length < choiceButton.length) {
+  while (propositionArr.length < choiceContent.length) {
     if (
       propositionArr[0].name.common !=
         countriesData[countriesIndex].name.common &&
@@ -118,11 +136,11 @@ const showProposition = (index) => {
     countriesIndex++;
   }
   shuffleArray(propositionArr);
-  for (let i = 0; i < choiceButton.length; i++) {
+  for (let i = 0; i < choiceContent.length; i++) {
     if (quizType == 'flag') {
-      choiceButton[i].textContent = propositionArr[i].translations.fra.common;
+      choiceContent[i].textContent = propositionArr[i].translations.fra.common;
     } else {
-      choiceButton[i].textContent = propositionArr[i].capital[0];
+      choiceContent[i].textContent = propositionArr[i].capital[0];
     }
   }
   console.log(propositionArr);
