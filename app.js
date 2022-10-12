@@ -3,6 +3,7 @@
 let countriesData = [];
 let selectedCountries = [];
 let index = 0;
+let propositionArr = [];
 let indexDisplay = 1;
 const totalQuestions = 10;
 let quizType;
@@ -49,17 +50,6 @@ exitBtn.addEventListener('click', () => {
   appear(mainMenu);
   selectedCountries = [];
   tenCountries(countriesData, selectedCountries);
-});
-
-choiceButton.forEach((choice) => {
-  choice.addEventListener('click', () => {
-    if (index <= 10) {
-      index++;
-      showQuestion(quizType, index);
-      showProposition(index);
-    }
-    // fonction qui affiche la box finale
-  });
 });
 
 const disappear = (disappearringElement) => {
@@ -116,13 +106,11 @@ const showQuestion = (userChoice, index) => {
 };
 
 const showProposition = (index) => {
-  let propositionArr = [];
   let choiceContent = document.querySelectorAll('.answer li .option');
   answerList.classList.remove('fadeout');
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
   let countriesIndex = 0;
-  // Trouver un moyen aleatoire
   while (propositionArr.length < choiceContent.length) {
     if (
       propositionArr[0].name.common !=
@@ -137,13 +125,16 @@ const showProposition = (index) => {
   }
   shuffleArray(propositionArr);
   for (let i = 0; i < choiceContent.length; i++) {
+    choiceContent[i].classList = 'option';
+    console.log(choiceContent[i]);
     if (quizType == 'flag') {
       choiceContent[i].textContent = propositionArr[i].translations.fra.common;
     } else {
       choiceContent[i].textContent = propositionArr[i].capital[0];
     }
   }
-  console.log(propositionArr);
+  // console.log('Proposition array');
+  // console.log(propo);
 };
 
 const shuffleArray = (array) => {
@@ -155,3 +146,27 @@ const shuffleArray = (array) => {
   }
   return array;
 };
+
+choiceButton.forEach((choice) => {
+  // checkAnswer(index, propositionArr, choice);
+  choice.addEventListener('click', () => {
+    if (index <= 10) {
+      console.log(choice.lastElementChild.textContent);
+      console.log('salut');
+      if (
+        selectedCountries[index].capital[0] ==
+        choice.lastElementChild.textContent
+      ) {
+        choice.classList.add('correct-answer');
+      } else {
+        choice.classList.add('incorrect-answer');
+      }
+      setTimeout(() => {
+        index++;
+        showQuestion(quizType, index);
+        showProposition(index);
+      }, 600);
+    }
+    // fonction qui affiche la box finale
+  });
+});
