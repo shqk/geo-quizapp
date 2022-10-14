@@ -15,7 +15,9 @@ const exitBtn = document.querySelector('.quit-cross');
 const choiceButton = document.querySelectorAll('.answer li');
 const questionContainer = document.querySelector('.question');
 const answerList = document.querySelector('.answer');
+let choiceContent = document.querySelectorAll('.answer li .option');
 
+// Récupère la data
 async function fetchCountries() {
   await fetch('https://restcountries.com/v3.1/all')
     .then((res) => res.json())
@@ -29,6 +31,7 @@ async function fetchCountries() {
 
 fetchCountries();
 
+// Quand l'utilisateur choisi le mode Drapeaux
 flagBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
@@ -37,6 +40,7 @@ flagBtn.addEventListener('click', () => {
   showProposition(index);
 });
 
+// Quand l'utilisateur choisi le mode Capitales
 capBtn.addEventListener('click', () => {
   disappear(mainMenu);
   appear(quizBox);
@@ -45,6 +49,7 @@ capBtn.addEventListener('click', () => {
   showProposition(index);
 });
 
+// Bouton pour quitter
 exitBtn.addEventListener('click', () => {
   disappear(quizBox);
   appear(mainMenu);
@@ -72,7 +77,6 @@ const appear = (appearElement) => {
 };
 
 // Choisi aléatoirement 10 pays
-
 const tenCountries = (fromArr, toArr) => {
   while (toArr.length < 10) {
     let randomIndex = Math.floor(Math.random() * fromArr.length);
@@ -106,7 +110,6 @@ const showQuestion = (userChoice, index) => {
 };
 
 const showProposition = (index) => {
-  let choiceContent = document.querySelectorAll('.answer li .option');
   answerList.classList.remove('fadeout');
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
@@ -125,7 +128,7 @@ const showProposition = (index) => {
   }
   shuffleArray(propositionArr);
   for (let i = 0; i < choiceContent.length; i++) {
-    choiceContent[i].classList = 'option';
+    // choiceContent[i].className = 'option';
     console.log(choiceContent[i]);
     if (quizType == 'flag') {
       choiceContent[i].textContent = propositionArr[i].translations.fra.common;
@@ -133,8 +136,10 @@ const showProposition = (index) => {
       choiceContent[i].textContent = propositionArr[i].capital[0];
     }
   }
-  // console.log('Proposition array');
-  // console.log(propo);
+  console.log('Proposition array');
+  console.log(propositionArr);
+  propositionArr = [];
+  console.log(propositionArr);
 };
 
 const shuffleArray = (array) => {
@@ -148,11 +153,8 @@ const shuffleArray = (array) => {
 };
 
 choiceButton.forEach((choice) => {
-  // checkAnswer(index, propositionArr, choice);
   choice.addEventListener('click', () => {
     if (index <= 10) {
-      console.log(choice.lastElementChild.textContent);
-      console.log('salut');
       if (
         selectedCountries[index].capital[0] ==
         choice.lastElementChild.textContent
@@ -163,9 +165,10 @@ choiceButton.forEach((choice) => {
       }
       setTimeout(() => {
         index++;
+        choice.className = 'option';
         showQuestion(quizType, index);
         showProposition(index);
-      }, 600);
+      }, 1000);
     }
     // fonction qui affiche la box finale
   });
