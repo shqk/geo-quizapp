@@ -3,8 +3,8 @@
 let countriesData = [];
 let selectedCountries = [];
 let index = 0;
+let nbRightAnswer = 0;
 let propositionArr = [];
-let indexDisplay = 1;
 const totalQuestions = 10;
 let quizType;
 const flagBtn = document.querySelector('.flags-option');
@@ -16,12 +16,18 @@ const choiceButton = document.querySelectorAll('.answer li');
 const questionContainer = document.querySelector('.question');
 const answerList = document.querySelector('.answer');
 let choiceContent = document.querySelectorAll('.answer li .option');
+const progressBar = document.querySelector(
+  '.progress-bar-container .progress-bar ',
+);
+const rightAnswers = document.querySelector(
+  '.quiz-progression .progress-number > span',
+);
 
 // Récupère la data
 async function fetchCountries() {
   await fetch('https://restcountries.com/v3.1/all')
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       countriesData = data;
     });
   console.log(countriesData);
@@ -33,6 +39,8 @@ fetchCountries();
 
 // Quand l'utilisateur choisi le mode Drapeaux
 flagBtn.addEventListener('click', () => {
+  index = 0;
+  nbRightAnswer = 0;
   disappear(mainMenu);
   appear(quizBox);
   quizType = 'flag';
@@ -42,6 +50,8 @@ flagBtn.addEventListener('click', () => {
 
 // Quand l'utilisateur choisi le mode Capitales
 capBtn.addEventListener('click', () => {
+  index = 0;
+  nbRightAnswer = 0;
   disappear(mainMenu);
   appear(quizBox);
   quizType = 'capital';
@@ -57,7 +67,7 @@ exitBtn.addEventListener('click', () => {
   tenCountries(countriesData, selectedCountries);
 });
 
-const disappear = (disappearringElement) => {
+const disappear = disappearringElement => {
   disappearringElement.classList.add('section-disappear');
   disappearringElement.classList.remove('section-appear');
   setTimeout(() => {
@@ -66,7 +76,7 @@ const disappear = (disappearringElement) => {
   }, 300);
 };
 
-const appear = (appearElement) => {
+const appear = appearElement => {
   setTimeout(() => {
     appearElement.classList.remove('inactive');
     setTimeout(() => {
@@ -92,6 +102,7 @@ const tenCountries = (fromArr, toArr) => {
 };
 
 const showQuestion = (userChoice, index) => {
+  progressBar.style.width = `${index * 10}%`;
   questionContainer.classList.remove('fadeout');
   let questionText = document.querySelector('.question-text');
   let image = document.querySelector('.question img');
@@ -109,7 +120,7 @@ const showQuestion = (userChoice, index) => {
   }
 };
 
-const showProposition = (index) => {
+const showProposition = index => {
   answerList.classList.remove('fadeout');
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
@@ -128,7 +139,6 @@ const showProposition = (index) => {
   }
   shuffleArray(propositionArr);
   for (let i = 0; i < choiceContent.length; i++) {
-    // choiceContent[i].className = 'option';
     console.log(choiceContent[i]);
     if (quizType == 'flag') {
       choiceContent[i].textContent = propositionArr[i].translations.fra.common;
@@ -136,13 +146,9 @@ const showProposition = (index) => {
       choiceContent[i].textContent = propositionArr[i].capital[0];
     }
   }
-  console.log('Proposition array');
-  console.log(propositionArr);
-  propositionArr = [];
-  console.log(propositionArr);
 };
 
-const shuffleArray = (array) => {
+const shuffleArray = array => {
   for (let i = 0; i < array.length; i++) {
     const j = Math.floor(Math.random() * (i + 1));
     const temp = array[i];
@@ -152,18 +158,12 @@ const shuffleArray = (array) => {
   return array;
 };
 
-choiceButton.forEach((choice) => {
+choiceButton.forEach(choice => {
   choice.addEventListener('click', () => {
     if (index <= 10) {
-      if (
-        selectedCountries[index].capital[0] ==
-        choice.lastElementChild.textContent
-      ) {
-        choice.classList.add('correct-answer');
-      } else {
-        choice.classList.add('incorrect-answer');
-      }
+      checkAnswer(index, choice, quizType);
       setTimeout(() => {
+        propositionArr = [];
         index++;
         choice.className = 'option';
         showQuestion(quizType, index);
@@ -173,3 +173,31 @@ choiceButton.forEach((choice) => {
     // fonction qui affiche la box finale
   });
 });
+
+const checkAnswer = (index, clickedChoice, type) => {
+  if (type == 'capital') {
+    if (
+      selectedCountries[index].capital[0] ==
+      clickedChoice.lastElementChild.textContent
+    ) {
+      clickedChoice.classList.add('correct-answer');
+      nbRightAnswer++;
+      rightAnswers.textContent = nbRightAnswer;
+    } else {
+      clickedChoice.classList.add('incorrect-answer');
+    }
+  } else {
+    if (
+      selectedCountries[index].translations.fra.common ==
+      clickedChoice.lastElementChild.textContent
+    ) {
+      clickedChoice.classList.add('correct-answer');
+      nbRightAnswer++;
+      rightAnswers.textContent = nbRightAnswer;
+    } else {
+      clickedChoice.classList.add('incorrect-answer');
+    }
+  }
+};
+
+// Faire une fonction reset

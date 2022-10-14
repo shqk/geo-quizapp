@@ -246,11 +246,12 @@ body {
           .progress-bar {
             position: absolute;
             height: 100%;
-            width: 100%;
+            width: 0%;
             transform: scaleX(1);
             transform-origin: left;
             background-color: $green-color;
             border-radius: 3px;
+            transition: 1s ease;
           }
         }
         .progress-number {

@@ -295,11 +295,12 @@ body .app-container .quiz-section .quiz-progression .progress-bar-container {
 body .app-container .quiz-section .quiz-progression .progress-bar-container .progress-bar {
   position: absolute;
   height: 100%;
-  width: 100%;
+  width: 0%;
   transform: scaleX(1);
   transform-origin: left;
   background-color: #21b844;
   border-radius: 3px;
+  transition: 1s ease;
 }
 body .app-container .quiz-section .quiz-progression .progress-number {
   font-weight: 500;
