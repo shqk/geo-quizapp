@@ -5,8 +5,8 @@ let selectedCountries = [];
 let index = 0;
 let nbRightAnswer = 0;
 let propositionArr = [];
-const totalQuestions = 10;
 let quizType;
+const totalQuestions = 10;
 const flagBtn = document.querySelector('.flags-option');
 const capBtn = document.querySelector('.capitals-option');
 const mainMenu = document.querySelector('.menu');
@@ -22,6 +22,9 @@ const progressBar = document.querySelector(
 const rightAnswers = document.querySelector(
   '.quiz-progression .progress-number > span',
 );
+const restartBtn = document.querySelector('.playagainbtn');
+const endScreen = document.querySelector('.end-screen');
+const currentScore = document.querySelector('.currentscore .scorenum');
 
 // Récupère la data
 async function fetchCountries() {
@@ -65,6 +68,11 @@ exitBtn.addEventListener('click', () => {
   appear(mainMenu);
   selectedCountries = [];
   tenCountries(countriesData, selectedCountries);
+});
+
+restartBtn.addEventListener('click', () => {
+  disappear(endScreen);
+  appear(mainMenu);
 });
 
 const disappear = disappearringElement => {
@@ -139,7 +147,6 @@ const showProposition = index => {
   }
   shuffleArray(propositionArr);
   for (let i = 0; i < choiceContent.length; i++) {
-    console.log(choiceContent[i]);
     if (quizType == 'flag') {
       choiceContent[i].textContent = propositionArr[i].translations.fra.common;
     } else {
@@ -160,17 +167,24 @@ const shuffleArray = array => {
 
 choiceButton.forEach(choice => {
   choice.addEventListener('click', () => {
-    if (index <= 10) {
+    if (index < 9) {
       checkAnswer(index, choice, quizType);
+      index++;
       setTimeout(() => {
         propositionArr = [];
-        index++;
         choice.className = 'option';
         showQuestion(quizType, index);
         showProposition(index);
       }, 1000);
+    } else {
+      checkAnswer(index, choice, quizType);
+      setTimeout(() => {
+        displayEndScreen(nbRightAnswer);
+        disappear(quizBox);
+        appear(endScreen);
+      }, 2000);
+      choice.className = 'option';
     }
-    // fonction qui affiche la box finale
   });
 });
 
@@ -200,4 +214,7 @@ const checkAnswer = (index, clickedChoice, type) => {
   }
 };
 
+const displayEndScreen = answer => {
+  currentScore.textContent = answer;
+};
 // Faire une fonction reset
