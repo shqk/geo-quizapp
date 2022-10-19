@@ -153,7 +153,6 @@ body .app-container .menu .menu-options {
 body .app-container .menu .menu-options .flags-option,
 body .app-container .menu .menu-options .capitals-option {
   display: flex;
-  cursor: pointer;
   width: 100%;
   height: 10rem;
   background: #fff;
@@ -163,6 +162,7 @@ body .app-container .menu .menu-options .capitals-option {
   justify-content: space-between;
   padding: 0 15px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 body .app-container .menu .menu-options .flags-option h1,
 body .app-container .menu .menu-options .flags-option .best-score,
@@ -424,6 +424,62 @@ body .app-container .quiz-section .disappear {
   to {
     opacity: 0;
   }
+}
+body .app-container .end-screen {
+  height: 400px;
+  width: 450px;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px 0;
+  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.103);
+  transform-origin: center;
+  opacity: 0;
+}
+body .app-container .end-screen .end-screen-container {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+body .app-container .end-screen .end-screen-container .score .currentscore {
+  font-size: 30px;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+body .app-container .end-screen .end-screen-container .score .currentscore :first-child {
+  color: #21b844;
+}
+body .app-container .end-screen .end-screen-container .score .currentscore :nth-child(2) {
+  font-weight: 800;
+}
+body .app-container .end-screen .end-screen-container .score .bestScore {
+  font-size: 15px;
+  text-align: center;
+  color: #616161;
+}
+body .app-container .end-screen .end-screen-container .playagainbtn {
+  background-color: #21b844;
+  color: white;
+  font-size: 20px;
+  padding: 20px 20px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+body .app-container .end-screen .end-screen-container .playagainbtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.233);
+  color: #363636;
+  background-color: #ececec;
 }
 body .app-container .section-disappear {
   -webkit-animation: section-disappear 0.4s forwards;
