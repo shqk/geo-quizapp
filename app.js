@@ -42,24 +42,12 @@ fetchCountries();
 
 // Quand l'utilisateur choisi le mode Drapeaux
 flagBtn.addEventListener('click', () => {
-  index = 0;
-  nbRightAnswer = 0;
-  disappear(mainMenu);
-  appear(quizBox);
-  quizType = 'flag';
-  showQuestion(quizType, index);
-  showProposition(index);
+  launch('flag');
 });
 
 // Quand l'utilisateur choisi le mode Capitales
 capBtn.addEventListener('click', () => {
-  index = 0;
-  nbRightAnswer = 0;
-  disappear(mainMenu);
-  appear(quizBox);
-  quizType = 'capital';
-  showQuestion(quizType, index);
-  showProposition(index);
+  launch('capital');
 });
 
 // Bouton pour quitter
@@ -67,7 +55,6 @@ exitBtn.addEventListener('click', () => {
   disappear(quizBox);
   appear(mainMenu);
   selectedCountries = [];
-  tenCountries(countriesData, selectedCountries);
 });
 
 restartBtn.addEventListener('click', () => {
@@ -109,26 +96,27 @@ const tenCountries = (fromArr, toArr) => {
   }
 };
 
-const showQuestion = (userChoice, index) => {
+const showQuestion = (index, type) => {
   progressBar.style.width = `${index * 10}%`;
   questionContainer.classList.remove('fadeout');
   let questionText = document.querySelector('.question-text');
   let image = document.querySelector('.question img');
   let countryName = document.querySelector('.country-name');
-  if (userChoice === 'flag') {
+  if (type === 'flag') {
     image.classList = 'flag-picture';
     countryName.textContent = '';
     questionText.textContent = 'À quel pays appartient ce drapeau ?';
     image.src = selectedCountries[index].flags.png;
-  } else if (userChoice === 'capital') {
+  } else if (type === 'capital') {
     image.src = '';
     image.classList = '';
     questionText.textContent = 'Quelle est la capitale de ce pays ?';
     countryName.textContent = selectedCountries[index].translations.fra.common;
   }
+  console.log(selectedCountries);
 };
 
-const showProposition = index => {
+const showProposition = (index, type) => {
   answerList.classList.remove('fadeout');
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
@@ -147,12 +135,13 @@ const showProposition = index => {
   }
   shuffleArray(propositionArr);
   for (let i = 0; i < choiceContent.length; i++) {
-    if (quizType == 'flag') {
+    if (type == 'flag') {
       choiceContent[i].textContent = propositionArr[i].translations.fra.common;
     } else {
       choiceContent[i].textContent = propositionArr[i].capital[0];
     }
   }
+  console.log(propositionArr);
 };
 
 const shuffleArray = array => {
@@ -173,8 +162,8 @@ choiceButton.forEach(choice => {
       setTimeout(() => {
         propositionArr = [];
         choice.className = 'option';
-        showQuestion(quizType, index);
-        showProposition(index);
+        showQuestion(index, quizType);
+        showProposition(index, quizType);
       }, 1000);
     } else {
       checkAnswer(index, choice, quizType);
@@ -218,3 +207,14 @@ const displayEndScreen = answer => {
   currentScore.textContent = answer;
 };
 // Faire une fonction reset
+
+const launch = type => {
+  index = 0;
+  nbRightAnswer = 0;
+  selectedCountries = [];
+  tenCountries(countriesData, selectedCountries);
+  disappear(mainMenu);
+  appear(quizBox);
+  showQuestion(index, type);
+  showProposition(index, type);
+};
