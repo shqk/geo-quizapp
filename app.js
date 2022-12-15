@@ -34,19 +34,21 @@ async function fetchCountries() {
       countriesData = data;
     });
   console.log(countriesData);
-  console.log(selectedCountries);
   tenCountries(countriesData, selectedCountries);
+  console.log(selectedCountries);
 }
 
 fetchCountries();
 
 // Quand l'utilisateur choisi le mode Drapeaux
 flagBtn.addEventListener('click', () => {
+  quizType = 'flag';
   launch('flag');
 });
 
 // Quand l'utilisateur choisi le mode Capitales
 capBtn.addEventListener('click', () => {
+  quizType = 'capital';
   launch('capital');
 });
 
@@ -61,6 +63,17 @@ restartBtn.addEventListener('click', () => {
   disappear(endScreen);
   appear(mainMenu);
 });
+
+const launch = type => {
+  index = 0;
+  nbRightAnswer = 0;
+  propositionArr = [];
+  tenCountries(countriesData, selectedCountries);
+  disappear(mainMenu);
+  appear(quizBox);
+  showProposition(index, type);
+  showQuestion(index, type);
+};
 
 const disappear = disappearringElement => {
   disappearringElement.classList.add('section-disappear');
@@ -113,7 +126,6 @@ const showQuestion = (index, type) => {
     questionText.textContent = 'Quelle est la capitale de ce pays ?';
     countryName.textContent = selectedCountries[index].translations.fra.common;
   }
-  console.log(selectedCountries);
 };
 
 const showProposition = (index, type) => {
@@ -154,29 +166,6 @@ const shuffleArray = array => {
   return array;
 };
 
-choiceButton.forEach(choice => {
-  choice.addEventListener('click', () => {
-    if (index < 9) {
-      checkAnswer(index, choice, quizType);
-      index++;
-      setTimeout(() => {
-        propositionArr = [];
-        choice.className = 'option';
-        showQuestion(index, quizType);
-        showProposition(index, quizType);
-      }, 1000);
-    } else {
-      checkAnswer(index, choice, quizType);
-      setTimeout(() => {
-        displayEndScreen(nbRightAnswer);
-        disappear(quizBox);
-        appear(endScreen);
-      }, 2000);
-      choice.className = 'option';
-    }
-  });
-});
-
 const checkAnswer = (index, clickedChoice, type) => {
   if (type == 'capital') {
     if (
@@ -203,18 +192,30 @@ const checkAnswer = (index, clickedChoice, type) => {
   }
 };
 
+choiceButton.forEach(choice => {
+  choice.addEventListener('click', () => {
+    if (index < 10) {
+      checkAnswer(index, choice, quizType);
+      index++;
+      setTimeout(() => {
+        propositionArr = [];
+        choice.className = 'option';
+        showQuestion(index, quizType);
+        showProposition(index, quizType);
+      }, 1000);
+    } else {
+      checkAnswer(index, choice, quizType);
+      setTimeout(() => {
+        displayEndScreen(nbRightAnswer);
+        disappear(quizBox);
+        appear(endScreen);
+      }, 2000);
+      choice.className = 'option';
+    }
+  });
+});
+
 const displayEndScreen = answer => {
   currentScore.textContent = answer;
 };
 // Faire une fonction reset
-
-const launch = type => {
-  index = 0;
-  nbRightAnswer = 0;
-  selectedCountries = [];
-  tenCountries(countriesData, selectedCountries);
-  disappear(mainMenu);
-  appear(quizBox);
-  showQuestion(index, type);
-  showProposition(index, type);
-};
