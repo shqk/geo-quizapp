@@ -68,6 +68,7 @@ restartBtn.addEventListener('click', () => {
 const launch = type => {
   index = 0;
   nbRightAnswer = 0;
+  rightAnswers.textContent = nbRightAnswer;
   propositionArr = [];
   tenCountries(countriesData, selectedCountries);
   disappear(mainMenu);
@@ -204,24 +205,20 @@ choiceButton.forEach(choice => {
   choice.addEventListener('click', () => {
     if (clicked == false) {
       clicked = true;
-      if (index < 10) {
-        checkAnswer(index, choice, quizType);
-        index++;
-        setTimeout(() => {
-          propositionArr = [];
-          choice.className = 'option';
+      checkAnswer(index, choice, quizType);
+      index++;
+      setTimeout(() => {
+        propositionArr = [];
+        choice.className = 'option';
+        if (index < 10) {
           showQuestion(index, quizType);
           showProposition(index, quizType);
-        }, 1000);
-      } else {
-        checkAnswer(index, choice, quizType);
-        setTimeout(() => {
+        } else {
           displayEndScreen(nbRightAnswer);
           disappear(quizBox);
           appear(endScreen);
-        }, 2000);
-        choice.className = 'option';
-      }
+        }
+      }, 1000);
     }
   });
 });
