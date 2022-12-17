@@ -7,6 +7,7 @@ let nbRightAnswer = 0;
 let propositionArr = [];
 let quizType;
 const totalQuestions = 10;
+let clicked = false;
 const flagBtn = document.querySelector('.flags-option');
 const capBtn = document.querySelector('.capitals-option');
 const mainMenu = document.querySelector('.menu');
@@ -130,6 +131,7 @@ const showQuestion = (index, type) => {
 
 const showProposition = (index, type) => {
   answerList.classList.remove('fadeout');
+  clicked = false;
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
   let countriesIndex = 0;
@@ -194,28 +196,37 @@ const checkAnswer = (index, clickedChoice, type) => {
 
 choiceButton.forEach(choice => {
   choice.addEventListener('click', () => {
-    if (index < 10) {
-      checkAnswer(index, choice, quizType);
-      index++;
-      setTimeout(() => {
-        propositionArr = [];
+    if (clicked == false) {
+      clicked = true;
+      if (index < 10) {
+        checkAnswer(index, choice, quizType);
+        index++;
+        setTimeout(() => {
+          propositionArr = [];
+          choice.className = 'option';
+          showQuestion(index, quizType);
+          showProposition(index, quizType);
+        }, 1000);
+      } else {
+        checkAnswer(index, choice, quizType);
+        setTimeout(() => {
+          displayEndScreen(nbRightAnswer);
+          disappear(quizBox);
+          appear(endScreen);
+        }, 2000);
         choice.className = 'option';
-        showQuestion(index, quizType);
-        showProposition(index, quizType);
-      }, 1000);
-    } else {
-      checkAnswer(index, choice, quizType);
-      setTimeout(() => {
-        displayEndScreen(nbRightAnswer);
-        disappear(quizBox);
-        appear(endScreen);
-      }, 2000);
-      choice.className = 'option';
+      }
     }
   });
 });
 
 const displayEndScreen = answer => {
   currentScore.textContent = answer;
+};
+
+const freezeClick = e => {
+  choiceButton.forEach(choice => {
+    choice.removeEventListener('click', e);
+  });
 };
 // Faire une fonction reset
