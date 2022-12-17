@@ -135,17 +135,23 @@ const showProposition = (index, type) => {
   // Ajoute le premier pays dans le tableau
   propositionArr.push(selectedCountries[index]);
   let countriesIndex = 0;
-  while (propositionArr.length < choiceContent.length) {
+  let sameRegionCountry = [];
+  // Tableau de potentiels propositions
+  for (let i = 0; i < countriesData.length; i++) {
     if (
-      propositionArr[0].name.common !=
-        countriesData[countriesIndex].name.common &&
-      (propositionArr[0].subregion == countriesData[countriesIndex].subregion ||
-        propositionArr[0].region == countriesData[countriesIndex].region) &&
-      countriesIndex < countriesData.length
+      propositionArr[0] != countriesData[i] &&
+      (propositionArr[0].subregion == countriesData[i].subregion ||
+        propositionArr[0].subregion == countriesData[i].region)
     ) {
-      propositionArr.push(countriesData[countriesIndex]);
+      sameRegionCountry.push(countriesData[i]);
     }
-    countriesIndex++;
+  }
+  while (propositionArr.length < choiceContent.length) {
+    randIndex = Math.floor(Math.random() * sameRegionCountry.length);
+    if (propositionArr.indexOf(sameRegionCountry[randIndex]) == -1) {
+      propositionArr.push(sameRegionCountry[randIndex]);
+      countriesIndex++;
+    }
   }
   shuffleArray(propositionArr);
   for (let i = 0; i < choiceContent.length; i++) {
