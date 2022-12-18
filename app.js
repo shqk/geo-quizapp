@@ -80,6 +80,7 @@ restartBtn.addEventListener('click', () => {
   appear(mainMenu);
 });
 
+// Pour donner le meilleur score à l'écran de fin
 const setHS = (type, rightAnswers) => {
   let HS = localStorage.getItem(`${type}HS`);
   if (HS != null) {
@@ -89,6 +90,7 @@ const setHS = (type, rightAnswers) => {
   }
 };
 
+// Initialise les données
 const launch = type => {
   index = 0;
   nbRightAnswer = 0;
@@ -101,6 +103,7 @@ const launch = type => {
   showQuestion(index, type);
 };
 
+// Pour des animations smooth
 const disappear = disappearringElement => {
   disappearringElement.classList.add('section-disappear');
   disappearringElement.classList.remove('section-appear');
@@ -135,6 +138,7 @@ const tenCountries = (fromArr, toArr) => {
   }
 };
 
+// Affiche les questions en fonction du type de quiz
 const showQuestion = (index, type) => {
   progressBar.style.width = `${index * 10}%`;
   questionContainer.classList.remove('fadeout');
@@ -154,6 +158,7 @@ const showQuestion = (index, type) => {
   }
 };
 
+// Affiche les propositions en fonction du type de quiz
 const showProposition = (index, type) => {
   answerList.classList.remove('fadeout');
   clicked = false;
@@ -161,7 +166,7 @@ const showProposition = (index, type) => {
   propositionArr.push(selectedCountries[index]);
   let countriesIndex = 0;
   let sameRegionCountry = [];
-  // Tableau de potentiels propositions
+  // Tableau de potentiels propositions (le but était de mettre des propositions de pays voisins / dans la même région ou sous région)
   for (let i = 0; i < countriesData.length; i++) {
     if (
       propositionArr[0] != countriesData[i] &&
@@ -171,6 +176,7 @@ const showProposition = (index, type) => {
       sameRegionCountry.push(countriesData[i]);
     }
   }
+  // Evite d'avoir toujours les mêmes propositions pour un pays donné en choisissant de manière aléatoire
   while (propositionArr.length < choiceContent.length) {
     randIndex = Math.floor(Math.random() * sameRegionCountry.length);
     if (propositionArr.indexOf(sameRegionCountry[randIndex]) == -1) {
@@ -188,6 +194,7 @@ const showProposition = (index, type) => {
   }
 };
 
+// ALgo de Fish-Yates pour bien mélanger le tableau
 const shuffleArray = array => {
   for (let i = 0; i < array.length; i++) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -198,6 +205,7 @@ const shuffleArray = array => {
   return array;
 };
 
+// Attribue les bonnes classes en fonction du choix de l'user (rouge = faux ; vert = correct)
 const checkAnswer = (index, clickedChoice, type) => {
   if (type == 'capital') {
     if (
@@ -226,6 +234,7 @@ const checkAnswer = (index, clickedChoice, type) => {
 
 choiceButton.forEach(choice => {
   choice.addEventListener('click', () => {
+    // Empêche de cliquer sur plusieurs propositions pour une même question
     if (clicked == false) {
       clicked = true;
       checkAnswer(index, choice, quizType);
@@ -238,12 +247,14 @@ choiceButton.forEach(choice => {
           showProposition(index, quizType);
         } else {
           currentScore.textContent = nbRightAnswer;
+          // sauvegarde dans le localStorage si l'user a battu son score ou joue pour la première fois
           if (
             localStorage.getItem(`${quizType}HS`) == null ||
             parseInt(localStorage.getItem(`${quizType}HS`)) < nbRightAnswer
           ) {
             localStorage.setItem(`${quizType}HS`, nbRightAnswer);
           }
+          // affichage de l'écran de fin
           disappear(quizBox);
           setHS(quizType, nbRightAnswer);
           appear(endScreen);
@@ -252,4 +263,3 @@ choiceButton.forEach(choice => {
     }
   });
 });
-// Faire une fonction reset
