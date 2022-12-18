@@ -47,7 +47,7 @@
               />
             </div>
             <div class="best-score">
-              <h2>Meilleur score : <span>0%</span></h2>
+              <h2>Meilleur score : <span class="flagHS">0%</span></h2>
             </div>
           </div>
           <div class="capitals-option">
@@ -70,7 +70,7 @@
               />
             </div>
             <div class="best-score">
-              <h2>Meilleur score : <span>0%</span></h2>
+              <h2>Meilleur score : <span class="capHS">0%</span></h2>
             </div>
           </div>
         </div>
@@ -84,12 +84,12 @@
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
-          <div class="progress-number">0/10</div>
+          <div class="progress-number"><span>0</span>/10</div>
         </div>
         <div class="question">
-          <p class="question-text">Quelle est la capitale de ce pays ?</p>
-          <span class="country-name">France</span>
-          <img src="" alt="drapeau" class="flag-picture" />
+          <p class="question-text"></p>
+          <span class="country-name"></span>
+          <img src="" alt="" class="flag-picture" />
         </div>
         <ul class="answer">
           <li class="choice">
@@ -110,7 +110,18 @@
           </li>
         </ul>
         </div>
-        <div class="quiz-footer"></div>
+        <div class="end-screen inactive">
+          <div class="end-screen-container">
+
+            <div class="score">
+              <p class="currentscore">Voici votre score : <span class="scorenum">7</span><span>/10</span></p>
+              <p class="bestScore">Meilleur score : <span class="bestscorenum">10</span>/10</p>
+            </div>
+            <div class="playagainbtn">
+              PLAY AGAIN
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
