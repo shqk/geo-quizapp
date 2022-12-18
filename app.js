@@ -26,6 +26,9 @@ const rightAnswers = document.querySelector(
 const restartBtn = document.querySelector('.playagainbtn');
 const endScreen = document.querySelector('.end-screen');
 const currentScore = document.querySelector('.currentscore .scorenum');
+const bestScore = document.querySelector('.bestScore .bestscorenum');
+const flagHSpercent = document.querySelector('.flagHS');
+const capHSpercent = document.querySelector('.capHS');
 
 // Récupère la data
 async function fetchCountries() {
@@ -34,12 +37,22 @@ async function fetchCountries() {
     .then(data => {
       countriesData = data;
     });
-  console.log(countriesData);
   tenCountries(countriesData, selectedCountries);
-  console.log(selectedCountries);
 }
 
 fetchCountries();
+
+const setHSMenu = () => {
+  flagHS = localStorage.getItem('flagHS');
+  capHS = localStorage.getItem('capitalHS');
+  if (flagHS != null) {
+    flagHSpercent.textContent = parseInt(flagHS) * 10 + '%';
+  }
+  if (capHS != null) {
+    capHSpercent.textContent = parseInt(capHS) * 10 + '%';
+  }
+};
+setHSMenu();
 
 // Quand l'utilisateur choisi le mode Drapeaux
 flagBtn.addEventListener('click', () => {
@@ -61,9 +74,20 @@ exitBtn.addEventListener('click', () => {
 });
 
 restartBtn.addEventListener('click', () => {
+  setHSMenu();
+  selectedCountries = [];
   disappear(endScreen);
   appear(mainMenu);
 });
+
+const setHS = (type, rightAnswers) => {
+  let HS = localStorage.getItem(`${type}HS`);
+  if (HS != null) {
+    bestScore.textContent = HS;
+  } else {
+    bestScore.textContent = 0;
+  }
+};
 
 const launch = type => {
   index = 0;
@@ -162,7 +186,6 @@ const showProposition = (index, type) => {
       choiceContent[i].textContent = propositionArr[i].capital[0];
     }
   }
-  console.log(propositionArr);
 };
 
 const shuffleArray = array => {
@@ -214,22 +237,19 @@ choiceButton.forEach(choice => {
           showQuestion(index, quizType);
           showProposition(index, quizType);
         } else {
-          displayEndScreen(nbRightAnswer);
+          currentScore.textContent = nbRightAnswer;
+          if (
+            localStorage.getItem(`${quizType}HS`) == null ||
+            parseInt(localStorage.getItem(`${quizType}HS`)) < nbRightAnswer
+          ) {
+            localStorage.setItem(`${quizType}HS`, nbRightAnswer);
+          }
           disappear(quizBox);
+          setHS(quizType, nbRightAnswer);
           appear(endScreen);
         }
       }, 1000);
     }
   });
 });
-
-const displayEndScreen = answer => {
-  currentScore.textContent = answer;
-};
-
-const freezeClick = e => {
-  choiceButton.forEach(choice => {
-    choice.removeEventListener('click', e);
-  });
-};
 // Faire une fonction reset
